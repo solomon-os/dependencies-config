@@ -408,7 +408,7 @@ return {
       "folke/snacks.nvim",
     },
     opts = {
-      terminal_cmd = "/Users/segunoladiran/.local/bin/claude",
+      terminal_cmd = vim.fn.expand("~/.local/bin/claude"),
       split_width_percentage = 0.25,
     },
     keys = {
