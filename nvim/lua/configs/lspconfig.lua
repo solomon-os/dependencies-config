@@ -84,6 +84,17 @@ vim.lsp.config("solidity_ls_nomicfoundation", {
   root_markers = { "foundry.toml", "hardhat.config.js", "hardhat.config.ts", "package.json", ".git" },
 })
 
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      runtime = { version = "LuaJIT" },
+      workspace = {
+        library = { vim.env.VIMRUNTIME },
+      },
+    },
+  },
+})
+
 -- Enable all servers
 vim.lsp.enable({
   "html",
@@ -96,6 +107,7 @@ vim.lsp.enable({
   "basedpyright",
   "clangd",
   "solidity_ls_nomicfoundation",
+  "lua_ls",
 })
 
 -- Rust is handled by rustaceanvim plugin

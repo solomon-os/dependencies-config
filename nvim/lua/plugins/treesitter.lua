@@ -19,6 +19,7 @@ return {
         "toml",
         "javascript",
         "typescript",
+        "tsx",
         "json",
         "python",
         "markdown",
@@ -30,6 +31,11 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
