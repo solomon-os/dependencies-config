@@ -20,6 +20,12 @@ return {
           flip_columns = 120,
         },
       },
+      keymap = {
+        builtin = {
+          true, -- inherit defaults
+          ["<CR>"] = "accept",
+        },
+      },
       fzf_opts = {
         ["--layout"] = "reverse",
       },
