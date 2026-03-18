@@ -1,22 +1,50 @@
-require "nvchad.mappings"
-
--- add yours here
-
 local map = vim.keymap.set
 
+-- General
+map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 map("t", "jk", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-map("n", "<leader>gc", "<cmd>Telescope git_commits<CR>")
-map("n", "<leader>gb", "<cmd>Telescope git_bcommits<CR>")
-map("n", "<leader>gs", "<cmd>Telescope git_status<CR>")
-map("n", "<leader>gb", "<cmd>Telescope git_branches<CR>")
-map("n", "<leader>lf", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Open Floating Diagnostic Window" })
-map("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", { desc = "Show All Diagnostics in Location List" })
-map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "LSP Code Action" })
+-- Window navigation
+map("n", "<C-h>", "<C-w>h", { desc = "Window left" })
+map("n", "<C-l>", "<C-w>l", { desc = "Window right" })
+map("n", "<C-j>", "<C-w>j", { desc = "Window down" })
+map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
 
--- Run cppcheck on whole project, results go to quickfix list
+-- Buffer navigation
+map("n", "<tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "<S-tab>", "<cmd>bprev<CR>", { desc = "Prev buffer" })
+map("n", "<leader>x", "<cmd>bdelete<CR>", { desc = "Close buffer" })
+
+-- LSP
+map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+map("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
+map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+map("n", "K", vim.lsp.buf.hover, { desc = "Hover info" })
+map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP rename" })
+map("n", "<leader>lf", vim.diagnostic.open_float, { desc = "Open Floating Diagnostic" })
+map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Diagnostics to loclist" })
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
+map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
+map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+
+-- fzf-lua (git)
+map("n", "<leader>gc", "<cmd>FzfLua git_commits<CR>", { desc = "Git commits" })
+map("n", "<leader>gb", "<cmd>FzfLua git_branches<CR>", { desc = "Git branches" })
+map("n", "<leader>gs", "<cmd>FzfLua git_status<CR>", { desc = "Git status" })
+
+-- Search in directory
+map("n", "<leader>fr", function()
+  vim.ui.input({ prompt = "Enter directory path: " }, function(input)
+    if input then
+      require("fzf-lua").live_grep({ cwd = input })
+    end
+  end)
+end, { desc = "Search in Directory" })
+
+-- Run cppcheck on whole project
 map("n", "<leader>cc", function()
   local cwd = vim.fn.getcwd()
   local compile_db = vim.fn.findfile("compile_commands.json", cwd .. ";")
@@ -25,10 +53,8 @@ map("n", "<leader>cc", function()
 
   local cmd
   if compile_db ~= "" then
-    local project_dir = vim.fn.fnamemodify(compile_db, ":p:h")
     cmd = "cppcheck --enable=all --std=c++20 --language=c++ --project=" .. vim.fn.fnamemodify(compile_db, ":p") .. " 2>&1"
   else
-    -- No compile_commands.json, just scan current directory
     vim.notify("No compile_commands.json found, scanning " .. cwd, vim.log.levels.WARN)
     cmd = "cppcheck --enable=all --std=c++20 --language=c++ --suppress=missingIncludeSystem " .. cwd .. " 2>&1"
   end
@@ -37,7 +63,7 @@ map("n", "<leader>cc", function()
     stdout_buffered = true,
     on_stdout = function(_, data)
       if data then
-        vim.fn.setqflist({}, 'a', { lines = data })
+        vim.fn.setqflist({}, "a", { lines = data })
       end
     end,
     on_exit = function()
@@ -45,10 +71,3 @@ map("n", "<leader>cc", function()
     end,
   })
 end, { desc = "Run cppcheck on project" })
-map("n", "<leader>fr", function()
-  vim.ui.input({ prompt = "Enter directory path: " }, function(input)
-    require("telescope.builtin").live_grep { search_dirs = { input } }
-  end)
-end, { desc = "Search in Directory" })
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
--- init.lua

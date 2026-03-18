@@ -1,31 +1,25 @@
--- EXAMPLE
-local on_attach = require("nvchad.configs.lspconfig").on_attach
-local on_init = require("nvchad.configs.lspconfig").on_init
-local capabilities = require("nvchad.configs.lspconfig").capabilities
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "jsonls" }
+vim.diagnostic.config({
+  virtual_text = { prefix = "" },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  float = { border = "rounded" },
+})
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    on_init = on_init,
-    capabilities = capabilities,
-  }
-end
-
--- typescript
-lspconfig.ts_ls.setup {
-  on_attach = on_attach,
-  on_init = on_init,
+-- Default config for all servers
+vim.lsp.config("*", {
   capabilities = capabilities,
-}
+  on_init = function(client, _)
+    if client.supports_method("textDocument/semanticTokens") then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+  end,
+})
 
-lspconfig.gopls.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
+-- Server-specific configs
+vim.lsp.config("gopls", {
   settings = {
     completeUnimported = true,
     usePlaceholders = true,
@@ -34,54 +28,43 @@ lspconfig.gopls.setup {
       unusedvariable = true,
     },
   },
-}
-lspconfig.jsonls.setup {
-  on_attach = function(client, capabilities)
-    capabilities.documentFormattingProvider = false
-  end,
-  on_init = on_init,
-}
+})
 
--- SQL Language Server
-lspconfig.sqlls.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
+vim.lsp.config("jsonls", {
+  on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
+  end,
+})
+
+vim.lsp.config("sqlls", {
   cmd = { "sql-language-server", "up", "--method", "stdio" },
   filetypes = { "sql", "mysql" },
-}
+})
 
-lspconfig.prismals.setup {
+vim.lsp.config("prismals", {
   cmd = { "prisma-language-server", "--stdio" },
   filetypes = { "prisma" },
-  root_dir = lspconfig.util.root_pattern "schema.prisma",
+  root_markers = { "schema.prisma" },
   settings = {
     prisma = {
-      prismaFmtBinPath = "prisma", -- Ensure it's using the correct formatter
+      prismaFmtBinPath = "prisma",
     },
   },
-}
+})
 
--- BasedPyright (Python LSP)
-lspconfig.basedpyright.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
+vim.lsp.config("basedpyright", {
   cmd = { "basedpyright-langserver", "--stdio" },
   filetypes = { "python" },
-  root_dir = lspconfig.util.find_git_ancestor,
+  root_markers = { ".git" },
   settings = {
     basedpyright = {
       typeCheckingMode = "standard",
       reportMissingImports = true,
     },
   },
-}
+})
 
-lspconfig.clangd.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
+vim.lsp.config("clangd", {
   cmd = {
     "clangd",
     "--background-index",
@@ -93,24 +76,26 @@ lspconfig.clangd.setup {
   init_options = {
     fallbackFlags = { "-std=c++20" },
   },
-}
+})
 
--- lspconfig.golangci_lint_ls.setup {
---   on_attach = on_attach,
---   on_init = on_init,
---   capabilities = capabilities,
---   filetypes = { "go", "gomod" },
--- }
-
--- Solidity Language Server (Nomic Foundation)
-lspconfig.solidity_ls_nomicfoundation.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
+vim.lsp.config("solidity_ls_nomicfoundation", {
   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
   filetypes = { "solidity" },
-  root_dir = lspconfig.util.root_pattern("foundry.toml", "hardhat.config.js", "hardhat.config.ts", "package.json", ".git"),
-}
+  root_markers = { "foundry.toml", "hardhat.config.js", "hardhat.config.ts", "package.json", ".git" },
+})
 
--- Rust Analyzer is now handled by rustaceanvim plugin
--- See ~/.config/nvim/after/ftplugin/rust.lua for keymaps
+-- Enable all servers
+vim.lsp.enable({
+  "html",
+  "cssls",
+  "ts_ls",
+  "gopls",
+  "jsonls",
+  "sqlls",
+  "prismals",
+  "basedpyright",
+  "clangd",
+  "solidity_ls_nomicfoundation",
+})
+
+-- Rust is handled by rustaceanvim plugin
