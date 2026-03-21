@@ -4,6 +4,8 @@ My personal Neovim config built on [lazy.nvim](https://github.com/folke/lazy.nvi
 
 Recommended terminal: [Ghostty](https://ghostty.org/)
 
+LSP, formatting, linting, and debugging are set up for the languages I work with: **Go, Rust, TypeScript/JavaScript, Python, C/C++, Lua, Solidity, SQL, HTML/CSS**. Feel free to extend the config for your own languages or open a PR to add support for others.
+
 ## Prerequisites
 
 ### Neovim
@@ -30,7 +32,7 @@ Install the runtimes for the languages you work with:
 
 | Runtime | Install | Used by |
 |---------|---------|---------|
-| **Node.js 18+** | `brew install node` | ts_ls, prettier, eslint, mcp-hub |
+| **Node.js 18+** | `brew install node` | ts_ls, prettier, eslint, mcp-hub — powers web dev (React, TypeScript, HTML, CSS) |
 | **Go 1.20+** | `brew install go` | gopls, gofumpt, golines, golangci-lint |
 | **Rust** | [rustup.rs](https://rustup.rs/) | rust-analyzer, clippy, codelldb |
 | **Python 3.8+** | `brew install python` | basedpyright, black |
