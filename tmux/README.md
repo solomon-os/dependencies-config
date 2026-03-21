@@ -2,19 +2,17 @@
 
 My tmux config with vim-style navigation and session persistence.
 
-## Prerequisites
+## Setup
 
-```bash
-brew install tmux
-```
-
-### TPM (Tmux Plugin Manager)
-
-```bash
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
-
-After launching tmux, press `C-Space I` (prefix + I) to install plugins.
+1. Install tmux:
+   ```bash
+   brew install tmux
+   ```
+2. Install TPM (Tmux Plugin Manager):
+   ```bash
+   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+   ```
+3. Launch tmux and press `C-Space I` (prefix + I) to install plugins
 
 ## Plugins
 
@@ -54,8 +52,3 @@ Prefix is `C-Space` (Ctrl+Space).
 | `v` (in copy mode) | Begin selection |
 | `y` (in copy mode) | Yank to clipboard |
 
-## Setup
-
-1. Symlink or copy `.tmux.conf` to `~/.config/tmux/.tmux.conf`
-2. Install TPM (see above)
-3. Launch tmux and press `C-Space I` to install plugins

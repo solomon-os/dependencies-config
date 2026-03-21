@@ -68,9 +68,24 @@ npm install -g prisma
 
 ## Setup
 
-1. Clone this repo to `~/.config/nvim`
-2. Open Neovim — lazy.nvim will auto-install all plugins on first launch
-3. Run `:MasonInstallAll` to install LSPs, formatters, and linters
+To clone only the nvim folder:
+
+```bash
+git clone --depth 1 --filter=blob:none --sparse git@github.com:sheghun/dependencies-config.git ~/.config
+cd ~/.config
+git sparse-checkout set nvim
+```
+
+Or if you already have the full repo, just symlink:
+
+```bash
+ln -s /path/to/dependencies-config/nvim ~/.config/nvim
+```
+
+Then:
+
+1. Open Neovim — lazy.nvim will auto-install all plugins on first launch
+2. Run `:MasonInstallAll` to install LSPs, formatters, and linters
 
 Mason handles these automatically:
 
@@ -112,3 +127,7 @@ Mason handles these automatically:
 | `<leader>ca` | Code action |
 | `<leader>ha` | Harpoon add |
 | `<leader>hm` | Harpoon menu |
+
+## Claude Code Integration
+
+This config includes [claudecode.nvim](https://github.com/greggh/claudecode.nvim) for in-editor integration with [Claude Code](https://claude.com/claude-code). It enables Claude to read and edit files directly in your Neovim buffers when running Claude Code from the terminal.
