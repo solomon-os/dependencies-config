@@ -2,6 +2,8 @@
 
 My tmux config with vim-style navigation and session persistence.
 
+Recommended terminal: [Ghostty](https://ghostty.org/)
+
 ## Setup
 
 1. Install tmux:

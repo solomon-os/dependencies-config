@@ -34,6 +34,10 @@ cd ~/.config
 git sparse-checkout set nvim
 ```
 
+## Recommended Terminal
+
+[Ghostty](https://ghostty.org/) is the recommended terminal emulator for this setup.
+
 ## Font
 
 All terminal configs use **FiraCode Nerd Font**. Install it with:

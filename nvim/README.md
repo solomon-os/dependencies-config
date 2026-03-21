@@ -2,6 +2,8 @@
 
 My personal Neovim config built on [lazy.nvim](https://github.com/folke/lazy.nvim) + [Mason](https://github.com/williamboman/mason.nvim).
 
+Recommended terminal: [Ghostty](https://ghostty.org/)
+
 ## Prerequisites
 
 ### Neovim
