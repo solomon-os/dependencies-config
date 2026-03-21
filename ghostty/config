@@ -7,3 +7,5 @@ shell-integration-features = ssh-env
 
 term = xterm-256color
 
+theme = Everforest Dark Hard
+
