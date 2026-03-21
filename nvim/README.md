@@ -37,6 +37,7 @@ Install the runtimes for the languages you work with:
 | **Rust** | [rustup.rs](https://rustup.rs/) | rust-analyzer, clippy, codelldb |
 | **Python 3.8+** | `brew install python` | basedpyright, black |
 | **C/C++ (clang)** | `brew install llvm` | clangd, clang-format |
+| **Solidity** | [Foundry](https://getfoundry.sh/) | solidity-ls, forge_fmt |
 
 ### System Tools
 
