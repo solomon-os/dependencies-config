@@ -44,7 +44,7 @@ end
 setup_codelldb()
 
 require("dap-vscode-js").setup {
-  debugger_path = "/Users/segunoladiran/.config/vscode-js-debug/",
+  debugger_path = vim.fn.expand("~/.config/vscode-js-debug/"),
   adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
 }
 
