@@ -12,7 +12,11 @@ My tmux config with vim-style navigation and session persistence.
    ```bash
    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
    ```
-3. Launch tmux and press `C-Space I` (prefix + I) to install plugins
+3. Symlink the config to your home directory:
+   ```bash
+   ln -s ~/.config/tmux/.tmux.conf ~/.tmux.conf
+   ```
+4. Launch tmux and press `C-Space I` (prefix + I) to install plugins
 
 ## Plugins
 

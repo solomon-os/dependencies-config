@@ -1,7 +1,7 @@
 [font]
 size = 15
 
-normal = {family = "LiterationMono Nerd Font Mono", style = "Regular"}
+normal = {family = "FiraCode Nerd Font", style = "Regular"}
 # offset = {x=1, y=10}
 
 [env]

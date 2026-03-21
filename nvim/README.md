@@ -17,7 +17,7 @@ brew install neovim
 A [Nerd Font](https://www.nerdfonts.com/) is required for icons in the file tree, completions, and DB UI.
 
 ```bash
-brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-fira-code-nerd-font
 ```
 
 Set it as your terminal font (Ghostty, iTerm2, etc.).
