@@ -21,10 +21,17 @@ return {
         "eslint",
         "basedpyright",
         "black",
+        "ruff",
         "sqlls",
         "solidity-ls",
         "rust-analyzer",
         "codelldb",
+        "clangd",
+        "goimports",
+        "goimports-reviser",
+        "nomicfoundation-solidity-language-server",
+        "prisma-language-server",
+        "typescript-language-server",
       },
     },
     config = function(_, opts)
@@ -50,7 +57,7 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      require("configs.lspconfig")
+      require "configs.lspconfig"
     end,
   },
 }
