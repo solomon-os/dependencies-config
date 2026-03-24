@@ -15,7 +15,7 @@ map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
 -- Buffer navigation
 map("n", "<tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-tab>", "<cmd>bprev<CR>", { desc = "Prev buffer" })
-map("n", "<leader>x", "<cmd>bdelete<CR>", { desc = "Close buffer" })
+map("n", "<leader>x", function() Snacks.bufdelete() end, { desc = "Close buffer" })
 
 -- LSP
 map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
