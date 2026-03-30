@@ -107,6 +107,7 @@ vim.lsp.enable({
   "html",
   "cssls",
   "ts_ls",
+  "tailwindcss",
   "gopls",
   "jsonls",
   "sqlls",

@@ -49,6 +49,7 @@ return {
       { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
       { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude conversation" },
       { "<leader>ao", "<cmd>ClaudeCode --continue<cr>", desc = "Continue last Claude conversation" },
+      { "<leader>ay", "<cmd>ClaudeCode --dangerously-skip-permissions<cr>", desc = "Claude (skip permissions)" },
     },
   },
   {

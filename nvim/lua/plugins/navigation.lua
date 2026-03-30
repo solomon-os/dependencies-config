@@ -9,6 +9,10 @@ return {
     },
     opts = {
       filters = { dotfiles = false },
+      update_focused_file = {
+        enable = true,
+        update_root = false,
+      },
       renderer = {
         highlight_git = true,
         icons = { show = { git = true } },

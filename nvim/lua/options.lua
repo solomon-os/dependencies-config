@@ -25,3 +25,5 @@ o.foldlevelstart = 99
 o.foldlevel = 0
 o.autoread = true
 o.swapfile = false
+o.spell = true
+o.spelllang = "en_us"

@@ -16,7 +16,9 @@ return {
     "okuuva/auto-save.nvim",
     cmd = "ASToggle",
     event = { "InsertLeave", "TextChanged" },
-    opts = {},
+    opts = {
+      debounce_delay = 3000,
+    },
   },
   {
     "folke/trouble.nvim",
@@ -33,5 +35,12 @@ return {
     "Wansmer/symbol-usage.nvim",
     event = "LspAttach",
     opts = {},
+  },
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {
+      fast_wrap = {},
+    },
   },
 }
