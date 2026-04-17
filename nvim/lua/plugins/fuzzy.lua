@@ -8,6 +8,7 @@ return {
       { "<leader>fw", "<cmd>FzfLua live_grep<CR>", desc = "Live grep" },
       { "<leader>fb", "<cmd>FzfLua buffers<CR>", desc = "Find buffers" },
       { "<leader>fh", "<cmd>FzfLua help_tags<CR>", desc = "Help tags" },
+      { "<leader>fa", function() require("fzf-lua").files({ fd_opts = "--hidden --no-ignore" }) end, desc = "Find all files (incl. hidden)" },
       { "<leader>fo", "<cmd>FzfLua oldfiles<CR>", desc = "Recent files" },
     },
     opts = {

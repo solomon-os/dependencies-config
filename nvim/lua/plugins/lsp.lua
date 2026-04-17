@@ -32,6 +32,7 @@ return {
         "nomicfoundation-solidity-language-server",
         "prisma-language-server",
         "typescript-language-server",
+        "tailwindcss-language-server",
       },
     },
     config = function(_, opts)

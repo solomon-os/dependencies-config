@@ -34,4 +34,11 @@ return {
     event = "LspAttach",
     opts = {},
   },
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {
+      fast_wrap = {},
+    },
+  },
 }
