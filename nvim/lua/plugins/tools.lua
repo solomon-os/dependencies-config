@@ -26,7 +26,7 @@ return {
   {
     "ravitemer/mcphub.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    lazy = false,
+    cmd = "MCPHub",
     build = "npm install -g mcp-hub@latest",
     config = function()
       require("mcphub").setup()
@@ -59,7 +59,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
-    opts = {},
+    opts = {
+      injections = { enabled = false },
+    },
   },
   {
     "sindrets/diffview.nvim",

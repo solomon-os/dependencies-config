@@ -16,9 +16,7 @@ return {
     "okuuva/auto-save.nvim",
     cmd = "ASToggle",
     event = { "InsertLeave", "TextChanged" },
-    opts = {
-      debounce_delay = 3000,
-    },
+    opts = {},
   },
   {
     "folke/trouble.nvim",

@@ -4,6 +4,16 @@ local map = vim.keymap.set
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
+map("i", "<Tab>", function()
+  local col = vim.fn.col(".")
+  local char = vim.fn.getline("."):sub(col, col)
+  if vim.tbl_contains({ ")", "]", "}", "'", '"', "`" }, char) then
+    return "<Right>"
+  else
+    return "<Tab>"
+  end
+end, { expr = true, desc = "Tab out of delimiters" })
+map({ "n", "v" }, "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
 map("t", "jk", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Window navigation
