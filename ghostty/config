@@ -9,3 +9,8 @@ term = xterm-256color
 
 theme = Everforest Dark Hard
 
+
+# window-decoration = false
+macos-titlebar-style = tabs 
+window-padding-x = 0
+window-padding-y = 0
