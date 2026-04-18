@@ -41,4 +41,15 @@ return {
       fast_wrap = {},
     },
   },
+  {
+    "nvim-pack/nvim-spectre",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = "Spectre",
+    keys = {
+      { "<leader>sr", '<cmd>lua require("spectre").open()<cr>', desc = "Search & Replace (Spectre)" },
+      { "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<cr>', desc = "Search current word" },
+      { "<leader>sf", '<cmd>lua require("spectre").open_file_search()<cr>', desc = "Search in file" },
+    },
+    opts = {},
+  },
 }
