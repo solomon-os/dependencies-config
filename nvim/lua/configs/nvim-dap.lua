@@ -43,12 +43,26 @@ end
 
 setup_codelldb()
 
-require("dap-vscode-js").setup {
-  debugger_path = vim.fn.expand("~/.config/vscode-js-debug/"),
-  adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-}
+local js_debug_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js"
 
-for _, language in ipairs { "typescript", "javascript" } do
+for _, adapter in ipairs { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" } do
+  dap.adapters[adapter] = {
+    type = "server",
+    host = "localhost",
+    port = "${port}",
+    executable = {
+      command = "node",
+      args = { js_debug_path, "${port}" },
+    },
+  }
+end
+
+dap.adapters.node = function(cb, config)
+  local merged = vim.tbl_extend("force", config, { type = "pwa-node" })
+  dap.adapters["pwa-node"](cb, merged)
+end
+
+for _, language in ipairs { "typescript", "javascript", "typescriptreact", "javascriptreact" } do
   require("dap").configurations[language] = {
     {
       type = "pwa-node",
@@ -61,7 +75,6 @@ for _, language in ipairs { "typescript", "javascript" } do
       type = "pwa-node",
       request = "attach",
       name = "Attach",
-      -- processId = require("dap.utils").pick_process,
       port = function()
         return coroutine.create(function(dap_run_co)
           vim.ui.input({ prompt = "Port: " }, function(input)
