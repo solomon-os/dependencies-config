@@ -19,7 +19,7 @@ vim.diagnostic.config({
 vim.lsp.config("*", {
   capabilities = capabilities,
   on_init = function(client, _)
-    if client.supports_method("textDocument/semanticTokens") then
+    if client:supports_method("textDocument/semanticTokens") then
       client.server_capabilities.semanticTokensProvider = nil
     end
   end,
@@ -45,7 +45,17 @@ vim.lsp.config("jsonls", {
 
 vim.lsp.config("sqlls", {
   cmd = { "sql-language-server", "up", "--method", "stdio" },
-  filetypes = { "sql", "mysql" },
+  filetypes = { "sql", "mysql", "pgsql" },
+  settings = {
+    sqlLanguageServer = {
+      connections = {
+        {
+          name = "postgresql",
+          adapter = "postgres",
+        },
+      },
+    },
+  },
 })
 
 vim.lsp.config("prismals", {

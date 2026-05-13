@@ -17,7 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Load plugins from lua/plugins/
 require("lazy").setup("plugins", {
   defaults = { lazy = true },
-  install = { colorscheme = { "everforest", "habamax" } },
 
   ui = {
     icons = {

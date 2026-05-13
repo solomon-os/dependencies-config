@@ -1,3 +1,18 @@
+local function has_biome_config()
+  return vim.fs.find({ "biome.json", "biome.jsonc" }, {
+    upward = true,
+    path = vim.api.nvim_buf_get_name(0),
+    stop = vim.uv.os_homedir(),
+  })[1] ~= nil
+end
+
+local function js_formatters()
+  if has_biome_config() then
+    return { "biome" }
+  end
+  return { "prettier" }
+end
+
 return {
   {
     "stevearc/conform.nvim",
@@ -15,13 +30,14 @@ return {
     opts = {
       formatters_by_ft = {
         go = { "goimports_reviser", "golines", "gofumpt" },
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        json = { "prettier" },
+        javascript = js_formatters,
+        typescript = js_formatters,
+        javascriptreact = js_formatters,
+        typescriptreact = js_formatters,
+        json = js_formatters,
+        jsonc = js_formatters,
+        css = js_formatters,
         html = { "prettier" },
-        css = { "prettier" },
         python = { "black" },
         c = { "clang-format" },
         cpp = { "clang-format" },
@@ -47,12 +63,20 @@ return {
       lint.linters_by_ft = {
         go = { "golangcilint" },
         python = { "ruff" },
-        javascript = { "eslint" },
-        typescript = { "eslint" },
+      }
+      local js_fts = {
+        javascript = true,
+        typescript = true,
+        javascriptreact = true,
+        typescriptreact = true,
       }
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
         callback = function()
-          lint.try_lint()
+          if js_fts[vim.bo.filetype] then
+            lint.try_lint(has_biome_config() and "biomejs" or "eslint")
+          else
+            lint.try_lint()
+          end
         end,
       })
     end,

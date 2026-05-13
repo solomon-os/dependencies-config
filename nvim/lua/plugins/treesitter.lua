@@ -1,10 +1,14 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
-    opts = {
-      ensure_installed = {
+    config = function()
+      local ts = require("nvim-treesitter")
+      ts.setup()
+
+      local parsers = {
         "vim",
         "lua",
         "vimdoc",
@@ -15,6 +19,8 @@ return {
         "gomod",
         "gowork",
         "solidity",
+        "c",
+        "cpp",
         "rust",
         "toml",
         "javascript",
@@ -24,12 +30,21 @@ return {
         "python",
         "markdown",
         "markdown_inline",
-      },
-      highlight = { enable = true },
-      indent = { enable = true },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+      }
+
+      local installed = ts.get_installed("parsers") or {}
+      local missing = vim.tbl_filter(function(p)
+        return not vim.tbl_contains(installed, p)
+      end, parsers)
+      if #missing > 0 then
+        ts.install(missing)
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          pcall(vim.treesitter.start)
+        end,
+      })
     end,
   },
   {

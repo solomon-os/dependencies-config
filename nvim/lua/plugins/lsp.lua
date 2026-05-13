@@ -33,6 +33,7 @@ return {
         "prisma-language-server",
         "typescript-language-server",
         "tailwindcss-language-server",
+        "js-debug-adapter",
       },
     },
     config = function(_, opts)

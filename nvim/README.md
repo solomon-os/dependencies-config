@@ -10,7 +10,7 @@ LSP, formatting, linting, and debugging are set up for the languages I work with
 
 ### Neovim
 
-Requires **Neovim 0.9+**.
+Requires **Neovim 0.11+** (`nvim-treesitter` `main` branch needs the new treesitter API).
 
 ```bash
 brew install neovim
@@ -44,6 +44,9 @@ Install the runtimes for the languages you work with:
 ```bash
 # Fuzzy finder (required by fzf-lua)
 brew install fzf
+
+# Tree-sitter CLI (required by nvim-treesitter main branch to compile parsers)
+npm install -g tree-sitter-cli
 
 # C++ static analysis (optional, used by <leader>cc)
 brew install cppcheck

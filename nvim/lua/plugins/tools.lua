@@ -26,7 +26,7 @@ return {
   {
     "ravitemer/mcphub.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    lazy = false,
+    cmd = "MCPHub",
     build = "npm install -g mcp-hub@latest",
     config = function()
       require("mcphub").setup()
@@ -36,7 +36,7 @@ return {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
     opts = {
-      terminal_cmd = vim.fn.expand("~/.local/bin/claude"),
+      terminal_cmd = vim.fn.expand("~/.local/bin/claude") .. " --model claude-opus-4-7",
       split_width_percentage = 0.25,
     },
     keys = {
@@ -59,7 +59,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
-    opts = {},
+    opts = {
+      injections = { enabled = false },
+    },
   },
   {
     "sindrets/diffview.nvim",
