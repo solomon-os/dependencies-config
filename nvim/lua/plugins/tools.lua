@@ -36,7 +36,7 @@ return {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
     opts = {
-      terminal_cmd = vim.fn.expand("~/.local/bin/claude"),
+      terminal_cmd = vim.fn.expand("~/.local/bin/claude") .. " --model claude-opus-4-7",
       split_width_percentage = 0.25,
     },
     keys = {
