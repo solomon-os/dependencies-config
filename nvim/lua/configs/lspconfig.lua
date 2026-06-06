@@ -81,15 +81,17 @@ vim.lsp.config("basedpyright", {
   },
 })
 
+local _clangd_bin = vim.fn.has("mac") == 1 and "/opt/homebrew/opt/llvm/bin/clangd" or vim.fn.exepath("clangd")
+local _clangpp_bin = vim.fn.has("mac") == 1 and "/opt/homebrew/opt/llvm/bin/clang++" or vim.fn.exepath("clang++")
 vim.lsp.config("clangd", {
   cmd = {
-    "/opt/homebrew/opt/llvm/bin/clangd",
+    _clangd_bin,
     "--background-index",
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
     "--function-arg-placeholders=true",
-    "--query-driver=/opt/homebrew/opt/llvm/bin/clang++",
+    "--query-driver=" .. _clangpp_bin,
   },
   init_options = {
     fallbackFlags = { "-std=c++23" },
