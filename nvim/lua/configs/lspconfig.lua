@@ -83,15 +83,16 @@ vim.lsp.config("basedpyright", {
 
 vim.lsp.config("clangd", {
   cmd = {
-    "clangd",
+    "/opt/homebrew/opt/llvm/bin/clangd",
     "--background-index",
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
     "--function-arg-placeholders=true",
+    "--query-driver=/opt/homebrew/opt/llvm/bin/clang++",
   },
   init_options = {
-    fallbackFlags = { "-std=c++20" },
+    fallbackFlags = { "-std=c++23" },
   },
 })
 
@@ -99,6 +100,56 @@ vim.lsp.config("solidity_ls_nomicfoundation", {
   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
   filetypes = { "solidity" },
   root_markers = { "foundry.toml", "hardhat.config.js", "hardhat.config.ts", "package.json", ".git" },
+})
+
+vim.lsp.config("yamlls", {
+  settings = {
+    redhat = { telemetry = { enabled = false } },
+    yaml = {
+      validate = true,
+      hover = true,
+      completion = true,
+      keyOrdering = false,
+      format = { enable = true },
+      schemaStore = {
+        enable = false,
+        url = "",
+      },
+      schemas = {
+        kubernetes = {
+          "*.k8s.yaml",
+          "*.k8s.yml",
+          "k8s/**/*.yaml",
+          "k8s/**/*.yml",
+          "kubernetes/**/*.yaml",
+          "kubernetes/**/*.yml",
+          "manifests/**/*.yaml",
+          "manifests/**/*.yml",
+          "deploy/**/*.yaml",
+          "deploy/**/*.yml",
+          "**/*deployment*.yaml",
+          "**/*service*.yaml",
+          "**/*ingress*.yaml",
+          "**/*configmap*.yaml",
+          "**/*secret*.yaml",
+        },
+        ["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
+        ["https://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
+        ["https://json.schemastore.org/docker-compose.json"] = "docker-compose*.{yml,yaml}",
+        ["https://json.schemastore.org/chart.json"] = "Chart.{yml,yaml}",
+      },
+    },
+  },
+})
+
+vim.lsp.config("helm_ls", {
+  settings = {
+    ["helm-ls"] = {
+      yamlls = {
+        path = "yaml-language-server",
+      },
+    },
+  },
 })
 
 vim.lsp.config("lua_ls", {
@@ -126,6 +177,8 @@ vim.lsp.enable({
   "clangd",
   "solidity_ls_nomicfoundation",
   "lua_ls",
+  "yamlls",
+  "helm_ls",
 })
 
 -- Rust is handled by rustaceanvim plugin

@@ -34,6 +34,8 @@ return {
         "typescript-language-server",
         "tailwindcss-language-server",
         "js-debug-adapter",
+        "yaml-language-server",
+        "helm-ls",
       },
     },
     config = function(_, opts)
