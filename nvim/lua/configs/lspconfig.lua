@@ -1,25 +1,25 @@
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-vim.diagnostic.config({
+vim.diagnostic.config {
   virtual_text = { prefix = "" },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = "✘",
-      [vim.diagnostic.severity.WARN]  = "▲",
-      [vim.diagnostic.severity.HINT]  = "⚑",
-      [vim.diagnostic.severity.INFO]  = "»",
+      [vim.diagnostic.severity.WARN] = "▲",
+      [vim.diagnostic.severity.HINT] = "⚑",
+      [vim.diagnostic.severity.INFO] = "»",
     },
   },
   underline = true,
   update_in_insert = false,
   float = { border = "rounded" },
-})
+}
 
 -- Default config for all servers
 vim.lsp.config("*", {
   capabilities = capabilities,
   on_init = function(client, _)
-    if client:supports_method("textDocument/semanticTokens") then
+    if client:supports_method "textDocument/semanticTokens" then
       client.server_capabilities.semanticTokensProvider = nil
     end
   end,
@@ -81,8 +81,8 @@ vim.lsp.config("basedpyright", {
   },
 })
 
-local _clangd_bin = vim.fn.has("mac") == 1 and "/opt/homebrew/opt/llvm/bin/clangd" or vim.fn.exepath("clangd")
-local _clangpp_bin = vim.fn.has("mac") == 1 and "/opt/homebrew/opt/llvm/bin/clang++" or vim.fn.exepath("clang++")
+local _clangd_bin = vim.fn.has "mac" == 1 and "/opt/homebrew/opt/llvm/bin/clangd" or vim.fn.exepath "clangd"
+local _clangpp_bin = vim.fn.has "mac" == 1 and "/opt/homebrew/opt/llvm/bin/clang++" or vim.fn.exepath "clang++"
 vim.lsp.config("clangd", {
   cmd = {
     _clangd_bin,
@@ -92,6 +92,8 @@ vim.lsp.config("clangd", {
     "--completion-style=detailed",
     "--function-arg-placeholders=true",
     "--query-driver=" .. _clangpp_bin,
+    -- Crucial flag for C++20 modules
+    "--experimental-modules-support",
   },
   init_options = {
     fallbackFlags = { "-std=c++23" },
@@ -166,7 +168,7 @@ vim.lsp.config("lua_ls", {
 })
 
 -- Enable all servers
-vim.lsp.enable({
+vim.lsp.enable {
   "html",
   "cssls",
   "ts_ls",
@@ -181,6 +183,6 @@ vim.lsp.enable({
   "lua_ls",
   "yamlls",
   "helm_ls",
-})
+}
 
 -- Rust is handled by rustaceanvim plugin
