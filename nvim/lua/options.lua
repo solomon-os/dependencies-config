@@ -1,5 +1,22 @@
 local o = vim.o
 
+-- Over SSH, force OSC 52 so yanks travel through the terminal back to the
+-- client machine's clipboard. Without this, nvim picks pbcopy and yanks land
+-- on the remote Mac's clipboard instead. Copy uses OSC 52; paste falls back
+-- to nvim's own register (most terminals refuse OSC 52 clipboard *reads*,
+-- which would otherwise make `p` hang).
+if vim.env.SSH_TTY then
+  local osc52 = require("vim.ui.clipboard.osc52")
+  local function paste()
+    return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+  end
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+    paste = { ["+"] = paste, ["*"] = paste },
+  }
+end
+
 o.number = true
 o.relativenumber = true
 o.clipboard = "unnamedplus"

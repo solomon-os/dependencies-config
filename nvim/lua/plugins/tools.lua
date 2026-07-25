@@ -36,7 +36,7 @@ return {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
     opts = {
-      terminal_cmd = vim.fn.expand("~/.local/bin/claude") .. " --model claude-opus-4-7",
+      terminal_cmd = vim.fn.expand "~/.local/bin/claude",
       split_width_percentage = 0.25,
     },
     keys = {
@@ -71,10 +71,10 @@ return {
       enhanced_diff_hl = true,
       hooks = {
         view_opened = function()
-          vim.cmd([[highlight DiffAdd guibg=#266b21 guifg=NONE]])
-          vim.cmd([[highlight DiffChange guibg=#21476b guifg=NONE]])
-          vim.cmd([[highlight DiffDelete guibg=#700202 guifg=NONE]])
-          vim.cmd([[highlight DiffText guibg=#1a1078 guifg=NONE]])
+          vim.cmd [[highlight DiffAdd guibg=#266b21 guifg=NONE]]
+          vim.cmd [[highlight DiffChange guibg=#21476b guifg=NONE]]
+          vim.cmd [[highlight DiffDelete guibg=#700202 guifg=NONE]]
+          vim.cmd [[highlight DiffText guibg=#1a1078 guifg=NONE]]
         end,
       },
     },

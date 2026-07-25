@@ -23,6 +23,11 @@ return {
               procMacro = {
                 enable = true,
               },
+              inlayHints = {
+                parameterHints = { enable = true },
+                chainingHints = { enable = true },
+                closureReturnTypeHints = { enable = "with_block" },
+              },
             },
           },
         },

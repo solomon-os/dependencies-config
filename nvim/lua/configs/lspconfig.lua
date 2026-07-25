@@ -1,25 +1,26 @@
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-vim.diagnostic.config({
+vim.diagnostic.config {
   virtual_text = { prefix = "" },
+  severity_sort = true,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = "✘",
-      [vim.diagnostic.severity.WARN]  = "▲",
-      [vim.diagnostic.severity.HINT]  = "⚑",
-      [vim.diagnostic.severity.INFO]  = "»",
+      [vim.diagnostic.severity.WARN] = "▲",
+      [vim.diagnostic.severity.HINT] = "⚑",
+      [vim.diagnostic.severity.INFO] = "»",
     },
   },
   underline = true,
   update_in_insert = false,
   float = { border = "rounded" },
-})
+}
 
 -- Default config for all servers
 vim.lsp.config("*", {
   capabilities = capabilities,
   on_init = function(client, _)
-    if client:supports_method("textDocument/semanticTokens") then
+    if client:supports_method "textDocument/semanticTokens" then
       client.server_capabilities.semanticTokensProvider = nil
     end
   end,
@@ -81,17 +82,22 @@ vim.lsp.config("basedpyright", {
   },
 })
 
+local _clangd_bin = vim.fn.has "mac" == 1 and "/opt/homebrew/opt/llvm/bin/clangd" or vim.fn.exepath "clangd"
+local _clangpp_bin = vim.fn.has "mac" == 1 and "/opt/homebrew/opt/llvm/bin/clang++" or vim.fn.exepath "clang++"
 vim.lsp.config("clangd", {
   cmd = {
-    "clangd",
+    _clangd_bin,
     "--background-index",
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
     "--function-arg-placeholders=true",
+    "--query-driver=" .. _clangpp_bin,
+    -- Crucial flag for C++20 modules
+    "--experimental-modules-support",
   },
   init_options = {
-    fallbackFlags = { "-std=c++20" },
+    fallbackFlags = { "-std=c++23" },
   },
 })
 
@@ -99,6 +105,56 @@ vim.lsp.config("solidity_ls_nomicfoundation", {
   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
   filetypes = { "solidity" },
   root_markers = { "foundry.toml", "hardhat.config.js", "hardhat.config.ts", "package.json", ".git" },
+})
+
+vim.lsp.config("yamlls", {
+  settings = {
+    redhat = { telemetry = { enabled = false } },
+    yaml = {
+      validate = true,
+      hover = true,
+      completion = true,
+      keyOrdering = false,
+      format = { enable = true },
+      schemaStore = {
+        enable = false,
+        url = "",
+      },
+      schemas = {
+        kubernetes = {
+          "*.k8s.yaml",
+          "*.k8s.yml",
+          "k8s/**/*.yaml",
+          "k8s/**/*.yml",
+          "kubernetes/**/*.yaml",
+          "kubernetes/**/*.yml",
+          "manifests/**/*.yaml",
+          "manifests/**/*.yml",
+          "deploy/**/*.yaml",
+          "deploy/**/*.yml",
+          "**/*deployment*.yaml",
+          "**/*service*.yaml",
+          "**/*ingress*.yaml",
+          "**/*configmap*.yaml",
+          "**/*secret*.yaml",
+        },
+        ["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
+        ["https://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
+        ["https://json.schemastore.org/docker-compose.json"] = "docker-compose*.{yml,yaml}",
+        ["https://json.schemastore.org/chart.json"] = "Chart.{yml,yaml}",
+      },
+    },
+  },
+})
+
+vim.lsp.config("helm_ls", {
+  settings = {
+    ["helm-ls"] = {
+      yamlls = {
+        path = "yaml-language-server",
+      },
+    },
+  },
 })
 
 vim.lsp.config("lua_ls", {
@@ -113,7 +169,7 @@ vim.lsp.config("lua_ls", {
 })
 
 -- Enable all servers
-vim.lsp.enable({
+vim.lsp.enable {
   "html",
   "cssls",
   "ts_ls",
@@ -126,6 +182,8 @@ vim.lsp.enable({
   "clangd",
   "solidity_ls_nomicfoundation",
   "lua_ls",
-})
+  "yamlls",
+  "helm_ls",
+}
 
 -- Rust is handled by rustaceanvim plugin

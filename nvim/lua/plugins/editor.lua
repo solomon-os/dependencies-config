@@ -9,7 +9,7 @@ return {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPost", "BufNewFile" },
     opts = function()
-      return require("configs.gitsigns")
+      return require "configs.gitsigns"
     end,
   },
   {
@@ -29,11 +29,11 @@ return {
     },
     opts = {},
   },
-  {
-    "Wansmer/symbol-usage.nvim",
-    event = "LspAttach",
-    opts = {},
-  },
+  -- {
+  --   "Wansmer/symbol-usage.nvim",
+  --   event = "LspAttach",
+  --   opts = {},
+  -- },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
