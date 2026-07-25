@@ -50,7 +50,13 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
-    opts = {},
+    opts = {
+      -- rust_analyzer is managed by rustaceanvim; auto-enabling it here
+      -- would attach a second client (duplicate hints/diagnostics)
+      automatic_enable = {
+        exclude = { "rust_analyzer" },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",
