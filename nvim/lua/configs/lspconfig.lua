@@ -29,11 +29,22 @@ vim.lsp.config("*", {
 -- Server-specific configs
 vim.lsp.config("gopls", {
   settings = {
-    completeUnimported = true,
-    usePlaceholders = true,
-    analyses = {
-      unreachable = true,
-      unusedvariable = true,
+    gopls = {
+      completeUnimported = true,
+      usePlaceholders = true,
+      analyses = {
+        unreachable = true,
+        unusedvariable = true,
+      },
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
     },
   },
 })

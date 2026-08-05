@@ -250,3 +250,27 @@ This config includes [claudecode.nvim](https://github.com/coder/claudecode.nvim)
 | `<leader>ao` | Normal | Continue last Claude conversation |
 
 See the [claudecode.nvim repo](https://github.com/coder/claudecode.nvim) for more information.
+
+## OpenCode Integration
+
+This config includes [opencode.nvim](https://github.com/nickjvandyke/opencode.nvim) for in-editor integration with [OpenCode](https://opencode.ai/). It connects to a running OpenCode server or starts one in a right-side snacks terminal, injecting editor context (cursor, selection, buffer, diagnostics) into your prompts.
+
+Requires the `opencode` CLI:
+
+```bash
+brew install opencode
+```
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `<leader>oa` | Normal, Visual | Ask OpenCode (prefills `@this:` context) |
+| `<leader>os` | Normal, Visual | Select OpenCode prompt/command/server |
+| `<leader>ot` | Normal | Toggle OpenCode terminal |
+| `go{motion}` | Normal, Visual | Append range to OpenCode prompt (dot-repeatable) |
+| `goo` | Normal | Append current line to OpenCode prompt |
+| `<S-C-u>` | Normal | Scroll OpenCode session up |
+| `<S-C-d>` | Normal | Scroll OpenCode session down |
+
+In visual mode, `<leader>oa` and `go` automatically include the selection as context. When OpenCode requests an edit, a side-by-side diff opens — use `da` to accept and `dr` to reject.
+
+See the [opencode.nvim repo](https://github.com/nickjvandyke/opencode.nvim) for more information.
