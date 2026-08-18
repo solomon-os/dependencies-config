@@ -1,5 +1,6 @@
-font-family = FiraCode Nerd Font
+font-family = "FiraCode Nerd Font Propo"
 font-size = 14
+font-thicken = true
 
 shell-integration = zsh
 
@@ -11,7 +12,7 @@ term = xterm-256color
 theme = Adventure 
 
 
-# window-decoration = false
-macos-titlebar-style = tabs 
+window-decoration = auto
+# macos-titlebar-style = hidden
 window-padding-x = 0
 window-padding-y = 0
