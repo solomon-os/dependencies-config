@@ -30,6 +30,8 @@ return {
         "python",
         "markdown",
         "markdown_inline",
+        "proto",
+        "ini",
       }
 
       local installed = ts.get_installed("parsers") or {}
@@ -45,6 +47,8 @@ return {
           pcall(vim.treesitter.start)
         end,
       })
+
+      vim.treesitter.language.register("ini", { "conf", "cfg", "dosini" })
     end,
   },
   {

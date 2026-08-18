@@ -30,8 +30,13 @@ vim.lsp.config("*", {
 vim.lsp.config("gopls", {
   settings = {
     gopls = {
-      completeUnimported = true,
-      usePlaceholders = true,
+      ui = {
+        completion = {
+          completeUnimported = true,
+          usePlaceholders = false,
+          completeFunctionCalls = false,
+        },
+      },
       analyses = {
         unreachable = true,
         unusedvariable = true,
@@ -143,11 +148,26 @@ vim.lsp.config("yamlls", {
           "manifests/**/*.yml",
           "deploy/**/*.yaml",
           "deploy/**/*.yml",
-          "**/*deployment*.yaml",
-          "**/*service*.yaml",
-          "**/*ingress*.yaml",
-          "**/*configmap*.yaml",
-          "**/*secret*.yaml",
+          "k8s/**/*deployment*.yaml",
+          "k8s/**/*service*.yaml",
+          "k8s/**/*ingress*.yaml",
+          "k8s/**/*configmap*.yaml",
+          "k8s/**/*secret*.yaml",
+          "kubernetes/**/*deployment*.yaml",
+          "kubernetes/**/*service*.yaml",
+          "kubernetes/**/*ingress*.yaml",
+          "kubernetes/**/*configmap*.yaml",
+          "kubernetes/**/*secret*.yaml",
+          "manifests/**/*deployment*.yaml",
+          "manifests/**/*service*.yaml",
+          "manifests/**/*ingress*.yaml",
+          "manifests/**/*configmap*.yaml",
+          "manifests/**/*secret*.yaml",
+          "deploy/**/*deployment*.yaml",
+          "deploy/**/*service*.yaml",
+          "deploy/**/*ingress*.yaml",
+          "deploy/**/*configmap*.yaml",
+          "deploy/**/*secret*.yaml",
         },
         ["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
         ["https://json.schemastore.org/github-action.json"] = ".github/action.{yml,yaml}",
@@ -166,6 +186,12 @@ vim.lsp.config("helm_ls", {
       },
     },
   },
+})
+
+vim.lsp.config("buf_ls", {
+  cmd = { "buf", "lsp", "serve", "--log-format=text" },
+  filetypes = { "proto", "buf-config" },
+  root_markers = { "buf.yaml", ".git" },
 })
 
 vim.lsp.config("lua_ls", {
@@ -195,6 +221,9 @@ vim.lsp.enable {
   "lua_ls",
   "yamlls",
   "helm_ls",
+  "buf_ls",
 }
 
 -- Rust is handled by rustaceanvim plugin
+
+require("configs.protobuf")

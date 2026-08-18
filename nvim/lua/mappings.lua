@@ -57,6 +57,11 @@ map("n", "<leader>fr", function()
   end)
 end, { desc = "Search in Directory" })
 
+-- Protobuf / protoc
+map("n", "<leader>pb", function()
+  require("configs.protobuf").build()
+end, { desc = "Build current .proto file" })
+
 -- Run cppcheck on whole project
 map("n", "<leader>cc", function()
   local cwd = vim.fn.getcwd()

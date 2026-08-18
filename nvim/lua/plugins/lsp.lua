@@ -36,6 +36,7 @@ return {
         "js-debug-adapter",
         "yaml-language-server",
         "helm-ls",
+        "buf",
       },
     },
     config = function(_, opts)

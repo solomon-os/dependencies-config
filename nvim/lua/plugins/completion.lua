@@ -11,7 +11,7 @@ return {
         preset = "default",
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-e>"] = { "hide" },
-        ["<CR>"] = { "accept", "fallback" },
+        ["<CR>"] = { "select_and_accept", "fallback" },
         ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
