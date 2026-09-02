@@ -17,6 +17,7 @@ return {
         "goimports_reviser",
         "golines",
         "gofumpt",
+        "delve",
         "refactoring",
         "eslint",
         "basedpyright",

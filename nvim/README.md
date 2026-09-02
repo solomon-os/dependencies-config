@@ -112,6 +112,7 @@ Mason handles these automatically:
 | goimports_reviser | Go imports |
 | golines | Go line length |
 | gofumpt | Go formatter |
+| delve | Go debugger |
 | eslint | JS/TS linter |
 | basedpyright | Python LSP |
 | black | Python formatter |

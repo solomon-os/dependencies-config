@@ -1,47 +1,9 @@
 require("dapui").setup()
 require("dap-go").setup()
 
--- Rust/CodeLLDB debugging setup
 local dap = require("dap")
 
-local function setup_codelldb()
-  local ok, mason_registry = pcall(require, "mason-registry")
-  if not ok then return end
-
-  local has_pkg, codelldb = pcall(mason_registry.get_package, "codelldb")
-  if not has_pkg then return end
-
-  local has_path, extension_path = pcall(function()
-    return codelldb:get_install_path() .. "/extension/"
-  end)
-  if not has_path then return end
-
-  local codelldb_path = extension_path .. "adapter/codelldb"
-
-  dap.adapters.codelldb = {
-    type = "server",
-    port = "${port}",
-    executable = {
-      command = codelldb_path,
-      args = { "--port", "${port}" },
-    },
-  }
-
-  dap.configurations.rust = {
-    {
-      name = "Launch file",
-      type = "codelldb",
-      request = "launch",
-      program = function()
-        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
-      end,
-      cwd = "${workspaceFolder}",
-      stopOnEntry = false,
-    },
-  }
-end
-
-setup_codelldb()
+-- Rust debugging is configured by rustaceanvim via :RustLsp debuggables
 
 local js_debug_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js"
 
@@ -128,12 +90,15 @@ vim.api.nvim_set_keymap(
   '<cmd>lua require("dap.ui.widgets").hover()<CR>',
   { noremap = true, silent = true }
 )
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>dt",
-  '<cmd>lua require("dap-go").debug_test()<CR>',
-  { noremap = true, desc = "debug test", silent = true }
-)
+vim.keymap.set("n", "<leader>dt", function()
+  if vim.bo.filetype == "go" then
+    require("dap-go").debug_test()
+  elseif vim.bo.filetype == "rust" then
+    vim.cmd.RustLsp("debuggables")
+  else
+    vim.notify("No test debugger configured for " .. vim.bo.filetype, vim.log.levels.WARN)
+  end
+end, { noremap = true, desc = "debug test", silent = true })
 -- Keybinding to open a sidebar with expression evaluation
 vim.api.nvim_set_keymap(
   "n",
